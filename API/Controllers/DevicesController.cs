@@ -1,32 +1,25 @@
 using Core.Entities;
-using Infrastructure.Data;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class DevicesController: ControllerBase
+public class DevicesController(IDevicesRepository repo): ControllerBase
 {
-    private readonly DeviceDbContext context;
-
-    public DevicesController(DeviceDbContext context)
-    {
-        this.context = context;
-    }
+    
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Device>>> getAll()
+    public async Task<ActionResult<IReadOnlyList<Device>>> getAll()
     {
-        var devices = await context.Devices.Include(d => d.User).ToListAsync();
-        return Ok(devices);
+       return Ok(await repo.GetDevicesAsync());
     }
 
     [HttpGet("{id:int}")]  // api/products/2
     public async Task<IActionResult> GetById(int id)
     {
-        var device = await context.Devices.Include(d => d.User).FirstOrDefaultAsync(d => d.Id == id);
+        var device = await repo.GetDeviceByIdAsync(id);
         if (device == null) return NotFound();
         return Ok(device);
     }
@@ -34,39 +27,50 @@ public class DevicesController: ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(Device device)
     {
-        context.Devices.Add(device);
-        await context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetById), new { id = device.Id }, device);
+        repo.AddDevice(device);
+        
+        if (await repo.SaveChangesAsync())
+        {
+            return CreatedAtAction("GetById", new {id = device.Id}, device);
+        }
+        
+        return BadRequest("Problem creating device");
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, Device updatedDevice)
+    public async Task<IActionResult> Update(int id, Device device)
     {
-        var device = await context.Devices.FindAsync(id);
-        if (device == null) return NotFound();
+        if (device.Id != id || !DeviceExists(id))
+            return BadRequest("Cannot update this device");
 
-        device.Name = updatedDevice.Name;
-        device.Manufacturer = updatedDevice.Manufacturer;
-        device.Type = updatedDevice.Type;
-        device.OS = updatedDevice.OS;
-        device.OSVersion = updatedDevice.OSVersion;
-        device.Processor = updatedDevice.Processor;
-        device.RAM = updatedDevice.RAM;
-        device.Description = updatedDevice.Description;
-        device.UserId = updatedDevice.UserId;
+        repo.UpdateDevice(device);
 
-        await context.SaveChangesAsync();
-        return NoContent();
+        if (await repo.SaveChangesAsync())
+        {
+            return NoContent();
+        }
+
+        return BadRequest("Problem updating the device");
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var device = await context.Devices.FindAsync(id);
+        var device = await repo.GetDeviceByIdAsync(id);
         if (device == null) return NotFound();
 
-        context.Devices.Remove(device);
-        await context.SaveChangesAsync();
-        return NoContent();
+        repo.DeleteDevice(device);
+        
+        if (await repo.SaveChangesAsync())
+        {
+            return NoContent();
+        }
+
+        return BadRequest("Problem deleting the device");
+    }
+
+    private bool DeviceExists(int id)
+    {
+        return repo.DeviceExists(id);
     }
 }

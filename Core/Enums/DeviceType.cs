@@ -2,6 +2,6 @@ namespace Core.Enums;
 
 public enum DeviceType
 {
-    Phone,
-    Tablet
+    Phone = 0,
+    Tablet = 1
 }
