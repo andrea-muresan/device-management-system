@@ -11,7 +11,7 @@ public class Device : BaseEntity
     public required string OSVersion { get; set; }
     public required string Processor { get; set; }
     public int RAM { get; set; }
-    public string? Description { get; set; }
+    public required string Description { get; set; }
 
     public int? UserId { get; set; }
     [System.Text.Json.Serialization.JsonIgnore]

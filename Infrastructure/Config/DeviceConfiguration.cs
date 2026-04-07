@@ -18,7 +18,7 @@ public class DeviceConfiguration : IEntityTypeConfiguration<Device>
         builder.Property(d => d.OSVersion).IsRequired().HasMaxLength(50);
         builder.Property(d => d.Processor).IsRequired().HasMaxLength(100);
         builder.Property(d => d.RAM).IsRequired();
-        builder.Property(d => d.Description).HasMaxLength(500).IsRequired(false);
+        builder.Property(d => d.Description).HasMaxLength(500).IsRequired();
 
         builder.HasOne(d => d.User)
             .WithMany(u => u.Devices)
