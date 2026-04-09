@@ -1,0 +1,18 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    
+    @for (item of devices; track item.id) {
+      <app-device-item 
+        [device]="item"
+      >
+      </app-device-item>
+    } 
+    @empty {
+      <div class="col-span-full flex flex-col items-center justify-center py-20 bg-white/50 border-4 border-dashed border-yellow-300 rounded-3xl">
+        <h2 class="text-2xl font-black text-yellow-900 uppercase">The pond is empty!</h2>
+        <p class="text-amber-700 font-bold">No devices found in the inventory.</p>
+      </div>
+    }
+
+  </div>
+</div>

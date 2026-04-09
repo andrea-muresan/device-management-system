@@ -1,7 +1,7 @@
 import { DeviceType } from "./device-type";
 
 export type Device = {
-    id: number; // From your BaseEntity
+    id: number; 
     name: string;
     manufacturer: string;
     type: DeviceType;

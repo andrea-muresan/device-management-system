@@ -1,0 +1,50 @@
+@if (device) {
+    <div class="bg-white border-2 border-yellow-400 rounded-2xl p-6 shadow-[8px_8px_0px_0px_rgba(251,191,36,1)] hover:shadow-[4px_4px_0px_0px_rgba(251,191,36,1)] transition-all animate-pop">
+    
+    <div class="flex justify-between items-start mb-4">
+        <h3 class="text-xl font-black text-yellow-900 uppercase tracking-tight">{{ device.name }}</h3>
+        <span class="px-3 py-1 bg-yellow-200 text-yellow-800 rounded-full text-xs">
+            {{ deviceTypeName }}
+        </span>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 mb-6 py-4 border-y-2 border-yellow-300">
+        <div>
+            <p class="text-gray-600 text-xs">OS</p>
+            <p class="font-semibold text-gray-800">{{device.os}}</p>
+        </div>
+        <div>
+            <p class="text-gray-600 text-xs">Assigned To</p>
+            <p class="font-semibold {{ device.userId ? 'text-black' : 'text-red-600' }}">
+                {{ device.userId ?? 'Unassigned' }}
+            </p>       
+        </div>
+        <div>
+            <p class="text-gray-600 text-xs">Location</p>
+            <p class="font-semibold text-gray-800">location</p>
+        </div>
+    </div>
+
+    <div class="flex gap-4">
+        <button 
+            routerLink="/inventory/view/{{device.id}}"
+            mat-flat-button 
+            class="view" 
+            >
+            View
+        </button>
+        <button 
+            mat-stroked-button 
+            class="update" 
+            routerLink="/inventory/view/{{device.id}}">
+            Update
+        </button>
+        <button 
+            mat-flat-button 
+            class="delete">
+            <mat-icon>delete</mat-icon>
+            Delete
+        </button>
+    </div>
+    </div>
+}

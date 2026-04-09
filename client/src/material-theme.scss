@@ -12,6 +12,27 @@
   ));
 }
 
+.delete {
+  @include mat.button-overrides((
+    filled-container-color: red
+  ));
+}
+
+.view, .create  {
+  @include mat.button-overrides((
+    filled-container-color: orange
+  ));
+}
+
+.update {
+  @include mat.button-overrides((
+    outlined-outline-color: orange,
+    outlined-outline-width: 2px,
+    outlined-label-text-color: orange
+  ));
+}
+
+
 html {
   height: 100%;
   @include mat.theme(
