@@ -1,4 +1,5 @@
 using API.DTOs;
+using Core.DTOs;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,12 @@ public class DevicesController(IDevicesService srv): ControllerBase
         var device = await srv.GetDeviceDetailsDTOAsync(id);
         if (device == null) return NotFound();
         return Ok(device);
+    }
+
+    [HttpGet("summary")]
+    public async Task<ActionResult<IReadOnlyList<DeviceSummaryDTO>>> GetDevicesSummary(int id)
+    {
+        return Ok(await srv.GetDevicesSummaryDTOAsync());
     }
 
 }

@@ -1,5 +1,6 @@
 
 using API.DTOs;
+using Core.DTOs;
 using Core.Entities;
 using Core.Interfaces;
 
@@ -75,5 +76,37 @@ public class DevicesService(IDevicesRepository deviceRepo, IUserRepository userR
         dev.UserRole = user.Role;
 
         return dev;
+    }
+
+    public async Task<IReadOnlyList<DeviceSummaryDTO>> GetDevicesSummaryDTOAsync()
+    {
+        var devices = await deviceRepo.GetDevicesAsync();
+        var summaries = new List<DeviceSummaryDTO>();
+
+        foreach (var device in devices)
+        {
+            var devDto = new DeviceSummaryDTO
+            {
+                Id = device.Id,
+                Name = device.Name,
+                Type = device.Type,
+                OS = device.OS
+            };
+
+            // user data
+            if (device.UserId.HasValue)
+            {
+                var user = await userRepo.GetUserByIdAsync(device.UserId.Value);
+                if (user != null)
+                {
+                    devDto.UserName = user.Name;
+                    devDto.UserLocation = user.Location;
+                }
+            }
+            
+            summaries.Add(devDto);
+        }
+
+        return summaries;
     }
 }

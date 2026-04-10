@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DeviceType } from '../../../shared/modules/device-type';
 import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { DeviceSummary } from '../../../shared/modules/device-summary';
 
 @Component({
   selector: 'app-device-item',
@@ -16,7 +17,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './device-item.component.css',
 })
 export class DeviceItemComponent {
-  @Input() device?: Device;
+  @Input() device?: DeviceSummary;
   
   get deviceTypeName(): string {
     if (this.device) return DeviceType[this.device.type]; 
