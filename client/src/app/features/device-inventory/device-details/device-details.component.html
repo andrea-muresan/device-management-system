@@ -1,0 +1,83 @@
+<div class="min-h-screen bg-yellow-50/30 py-12 px-4">
+  <div class="max-w-2xl mx-auto bg-yellow-50 rounded-2xl shadow-2xl overflow-hidden border-2 border-yellow-200 animate-pop">
+    
+    <div class="sticky top-0 bg-yellow-100 border-b border-yellow-300 px-8 py-6 flex items-center justify-between">
+      <h2 class="text-2xl font-bold text-yellow-900">Device Details</h2>
+    </div>
+
+    @if (deviceDetails) {
+    <div class="p-8">
+      <div class="space-y-8 text-gray-800">
+        
+        <div>
+          <h4 class="text-sm font-semibold text-yellow-800 mb-4 tracking-widest uppercase">Device Specifications</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p class="text-gray-500 text-xs uppercase font-bold">Device Name</p>
+              <p class="font-semibold text-gray-900 text-lg">{{deviceDetails.name}}</p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-xs uppercase font-bold">Manufacturer</p>
+              <p class="font-semibold text-gray-800">{{deviceDetails.manufacturer}}</p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-xs uppercase font-bold">Device Type</p>
+              <p class="font-semibold text-gray-800">{{deviceTypeName}}</p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-xs uppercase font-bold">Operating System</p>
+              <p class="font-semibold text-gray-800">{{deviceDetails.os}}</p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-xs uppercase font-bold">Processor</p>
+              <p class="font-semibold text-gray-800">{{deviceDetails.processor}}</p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-xs uppercase font-bold">RAM</p>
+              <p class="font-semibold text-gray-800">{{deviceDetails.ram}} GB</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/50 p-4 rounded-xl border border-yellow-200">
+            <p class="text-gray-500 text-xs uppercase font-bold mb-1">Description</p>
+            <p class="text-sm leading-relaxed italic">{{deviceDetails.description}}</p>
+        </div>
+
+        <div class="border-t border-yellow-300 pt-6">
+          <h4 class="text-sm font-semibold text-yellow-800 mb-4 tracking-widest uppercase">Current User</h4>
+          
+          @if (deviceDetails.userName) {
+            <div class="space-y-4 bg-white/40 p-4 rounded-xl">
+              <div>
+                <p class="text-gray-600 text-xs font-bold uppercase">Name</p>
+                <p class="font-semibold text-amber-700 text-xl">{{deviceDetails.userName}}</p>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                      <p class="text-gray-600 text-xs font-bold uppercase">Role</p>
+                      <p class="font-semibold text-gray-800">{{deviceDetails.userRole}}</p>
+                  </div>
+                  <div>
+                      <p class="text-gray-600 text-xs font-bold uppercase">Location</p>
+                      <p class="font-semibold text-green-600">{{deviceDetails.userLocation}}</p>
+                  </div>
+              </div>
+            </div>
+          } @else {
+            <div class="p-6 border-2 border-dashed border-yellow-300 rounded-xl text-center">
+                <p class="font-bold text-yellow-700 uppercase">This device is unassigned</p>
+                <button class="mt-2 text-xs font-black text-white bg-yellow-600 px-4 py-2 rounded-lg hover:bg-yellow-700">ASSIGN NOW</button>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+    } @else {
+      <div class="p-20 text-center">
+        <p class="text-yellow-800 font-black animate-pulse">SEARCHING THE POND...</p>
+      </div>
+    }
+
+  </div>
+</div>

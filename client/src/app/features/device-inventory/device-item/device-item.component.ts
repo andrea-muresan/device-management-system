@@ -17,7 +17,7 @@ import { RouterLink } from '@angular/router';
 })
 export class DeviceItemComponent {
   @Input() device?: Device;
-
+  
   get deviceTypeName(): string {
     if (this.device) return DeviceType[this.device.type]; 
     else return '';

@@ -18,7 +18,7 @@ public class DeviceRepository(DeviceDbContext context) : IDevicesRepository
 
     public bool DeviceExists(int id)
     {
-        return context.Devices.Any(x => x.Id ==id);
+        return context.Devices.Any(x => x.Id == id);
     }
 
     public async Task<Device?> GetDeviceByIdAsync(int id)
