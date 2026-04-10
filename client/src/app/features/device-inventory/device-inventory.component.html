@@ -4,6 +4,7 @@
     @for (item of devices; track item.id) {
       <app-device-item 
         [device]="item"
+        (deleted)="handleDelete($event)"
       >
       </app-device-item>
     } 

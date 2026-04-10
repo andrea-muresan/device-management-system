@@ -28,4 +28,8 @@ export class InventoryService {
   createDevice(device: DeviceCreate): Observable<any> {
     return this.http.post(`${this.baseUrl}devices`, device);
   }
+
+  deleteDevice(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}devices/${id}`);
+  }
 }

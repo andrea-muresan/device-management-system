@@ -23,4 +23,8 @@ export class DeviceInventoryComponent implements OnInit {
       error: error => console.log(error)
     });
   }
+
+  handleDelete(id: number) {
+    this.devices = this.devices.filter(d => d.id !== id);
+  }
 }
