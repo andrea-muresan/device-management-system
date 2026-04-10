@@ -36,7 +36,7 @@ public class DevicesController(IDevicesService srv): ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, Device device)
+    public async Task<IActionResult> Update(int id, UpdateDeviceDTO device)
     {
         if (id != device.Id) return BadRequest("ID mismatch");
 

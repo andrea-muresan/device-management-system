@@ -56,9 +56,23 @@ public class DevicesService(IDevicesRepository deviceRepo, IUserRepository userR
         return await deviceRepo.GetDeviceByIdAsync(id);
     }
 
-    public async Task<bool> UpdateDeviceAsync(Device device)
+    public async Task<bool> UpdateDeviceAsync(UpdateDeviceDTO dto)
     {
-        if (!deviceRepo.DeviceExists(device.Id)) return false;
+        if (!deviceRepo.DeviceExists(dto.Id)) return false;
+
+        var device = new Device
+        {
+            Id = dto.Id,
+            Name = dto.Name,
+            Manufacturer = dto.Manufacturer,
+            Type = dto.Type,
+            OS = dto.OS,
+            OSVersion = dto.OSVersion,
+            Processor = dto.Processor,
+            RAM = dto.RAM,
+            Description = dto.Description,
+            UserId = dto.UserId
+        };
 
         deviceRepo.UpdateDevice(device);
         return await deviceRepo.SaveChangesAsync();
@@ -86,6 +100,7 @@ public class DevicesService(IDevicesRepository deviceRepo, IUserRepository userR
             Manufacturer = device.Manufacturer,
             Type = device.Type,
             OS = device.OS,
+            OSVersion = device.OSVersion,
             Processor = device.Processor,
             RAM = device.RAM,
             Description = device.Description,
