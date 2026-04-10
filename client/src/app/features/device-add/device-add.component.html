@@ -1,0 +1,111 @@
+<div class="min-h-screen bg-yellow-50/30 py-12 px-4">
+  <form [formGroup]="deviceForm" (ngSubmit)="onSubmit()" 
+    class="max-w-2xl mx-auto bg-yellow-50 rounded-2xl shadow-2xl overflow-hidden border-2 border-yellow-200">
+    
+    <div class="sticky top-0 bg-yellow-100 border-b border-yellow-300 px-8 py-6 flex items-center justify-between z-10">
+      <h2 class="text-2xl font-bold text-yellow-900">Add New Device</h2>
+      <div class="space-x-3">
+        <button type="button" (click)="deviceForm.reset()" class="text-yellow-800 font-bold text-sm px-4">RESET</button>
+        <button type="submit" [disabled]="deviceForm.invalid" 
+          class="bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-300 text-white px-6 py-2 rounded-xl font-bold transition-all shadow-md">
+          SAVE DEVICE
+        </button>
+      </div>
+    </div>
+
+    <div class="p-8 space-y-6">
+      <div class="flex flex-col">
+        <label class="text-gray-500 text-xs uppercase font-bold mb-1">Device Name*</label>
+        <input type="text" formControlName="name" placeholder="e.g. iPhone 15 Pro"
+          [ngClass]="getInputClass('name')"
+          class="bg-white border-2 rounded-lg p-2 outline-none font-semibold transition-all">
+        
+        @if (shouldShowError('name')) {
+          <div class="text-[10px] text-red-600 font-bold mt-1 uppercase">
+            @if (deviceForm.get('name')?.errors?.['required']) { Name is required }
+            @if (deviceForm.get('name')?.errors?.['minlength']) { Too short (min 3) }
+          </div>
+        }
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex flex-col">
+          <label class="text-gray-500 text-xs uppercase font-bold mb-1">Manufacturer*</label>
+          <input type="text" formControlName="manufacturer" [ngClass]="getInputClass('manufacturer')"
+            class="bg-white border-2 rounded-lg p-2 outline-none transition-all" placeholder="e.g. Apple">
+          @if (shouldShowError('manufacturer')) {
+            <span class="text-[10px] text-red-600 font-bold mt-1 uppercase">Required</span>
+          }
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-gray-500 text-xs uppercase font-bold mb-1">Device Type*</label>
+          <select formControlName="type" [ngClass]="getInputClass('type')"
+            class="bg-white border-2 rounded-lg p-2 outline-none transition-all">
+            <option [value]="null">Select Type</option>
+            @for (t of deviceTypes; track t.id) {
+              <option [value]="t.id">{{t.name}}</option>
+            }
+          </select>
+        </div>
+
+        <div class="flex flex-col">
+            <label class="text-gray-500 text-xs uppercase font-bold mb-1">Operating System*</label>
+            <input type="text" formControlName="os" placeholder="e.g. iOS"
+            [ngClass]="getInputClass('os')"
+            class="bg-white border-2 rounded-lg p-2 outline-none transition-all">
+            
+            @if (shouldShowError('os')) {
+            <div class="text-[10px] text-red-600 font-bold mt-1 uppercase">
+                @if (deviceForm.get('os')?.errors?.['required']) { OS is required }
+                @if (deviceForm.get('os')?.errors?.['maxlength']) { Too long (max 30) }
+            </div>
+            }
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-gray-500 text-xs uppercase font-bold mb-1">OS Version*</label>
+          <input type="text" formControlName="osVersion" [ngClass]="getInputClass('osVersion')"
+            class="bg-white border-2 rounded-lg p-2 outline-none transition-all" placeholder="e.g. 17.4.1">
+          @if (shouldShowError('osVersion')) {
+            <span class="text-[10px] text-red-600 font-bold mt-1 uppercase">Version required</span>
+          }
+        </div>
+
+        <div class="flex flex-col">
+            <label class="text-gray-500 text-xs uppercase font-bold mb-1">Processor*</label>
+            <input type="text" formControlName="processor" placeholder="e.g. A17 Pro"
+            [ngClass]="getInputClass('processor')"
+            class="bg-white border-2 rounded-lg p-2 outline-none transition-all">
+            
+            @if (shouldShowError('processor')) {
+            <div class="text-[10px] text-red-600 font-bold mt-1 uppercase">
+                @if (deviceForm.get('processor')?.errors?.['required']) { Processor is required }
+            </div>
+            }
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-gray-500 text-xs uppercase font-bold mb-1">RAM* (GB)</label>
+          <div class="relative">
+            <input type="number" formControlName="ram" [ngClass]="getInputClass('ram')"
+              class="w-full bg-white border-2 rounded-lg p-2 outline-none transition-all">
+            <span class="absolute right-3 top-2.5 text-gray-400 text-sm pointer-events-none font-bold">GB</span>
+          </div>
+          @if (shouldShowError('ram')) {
+            <div class="text-[10px] text-red-600 font-bold mt-1 uppercase">
+              @if (deviceForm.get('ram')?.errors?.['min']) { Min 1GB }
+              @if (deviceForm.get('ram')?.errors?.['max']) { Max 512GB }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="bg-white/50 p-4 rounded-xl border-2 transition-all" [ngClass]="getInputClass('description')">
+        <label class="text-gray-500 text-xs uppercase font-bold mb-1 block">Description*</label>
+        <textarea formControlName="description" rows="3" placeholder="Add technical notes..."
+          class="w-full bg-transparent border-none focus:ring-0 italic text-sm p-0 resize-none outline-none"></textarea>
+      </div>
+    </div>
+  </form>
+</div>

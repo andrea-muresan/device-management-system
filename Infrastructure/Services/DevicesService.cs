@@ -20,6 +20,32 @@ public class DevicesService(IDevicesRepository deviceRepo, IUserRepository userR
         throw new Exception("Problem creating the device");
     }
 
+    public async Task<Device> CreateDeviceAsync(CreateDeviceDTO dto)
+    {
+        var device = new Device
+        {
+            Name = dto.Name,
+            Manufacturer = dto.Manufacturer,
+            Type = dto.Type,
+            OS = dto.OS,
+            OSVersion = dto.OSVersion,
+            Processor = dto.Processor,
+            RAM = dto.RAM,
+            Description = dto.Description
+        };
+        
+        deviceRepo.AddDevice(device);
+        
+        if (await deviceRepo.SaveChangesAsync())
+        {
+            return device;
+        }
+
+        throw new Exception("Problem creating the device");
+    }
+
+    
+
     public async Task<IReadOnlyList<Device>> GetDevicesAsync()
     {
         return await deviceRepo.GetDevicesAsync();

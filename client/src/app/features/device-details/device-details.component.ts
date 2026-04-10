@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { InventoryService } from '../../../core/services/inventory.service';
-import { Device } from '../../../shared/modules/device';
+import { InventoryService } from '../../core/services/inventory.service';
+import { Device } from '../../shared/modules/device';
 import { ActivatedRoute } from '@angular/router';
-import { DeviceDetails } from '../../../shared/modules/device-details';
-import { DeviceType } from '../../../shared/modules/device-type';
+import { DeviceDetails } from '../../shared/modules/device-details';
+import { DeviceType } from '../../shared/modules/device-type';
 
 @Component({
   selector: 'app-device-details',

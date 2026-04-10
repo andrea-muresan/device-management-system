@@ -27,8 +27,9 @@ public class DevicesController(IDevicesService srv): ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Device device)
+    public async Task<IActionResult> Create([FromBody] CreateDeviceDTO device)
     {
+
         var createdDevice = await srv.CreateDeviceAsync(device);
 
         return CreatedAtAction(nameof(GetById), new { id = createdDevice.Id }, createdDevice);
