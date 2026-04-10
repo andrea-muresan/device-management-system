@@ -3,10 +3,11 @@ using API.DTOs;
 using Core.DTOs;
 using Core.Entities;
 using Core.Interfaces;
+using AutoMapper;
 
 namespace Infrastructure.Services;
 
-public class DevicesService(IDevicesRepository deviceRepo, IUserRepository userRepo) : IDevicesService
+public class DevicesService(IDevicesRepository deviceRepo, IMapper mapper) : IDevicesService
 {
     public async Task<Device> CreateDeviceAsync(Device device)
     {
@@ -22,17 +23,7 @@ public class DevicesService(IDevicesRepository deviceRepo, IUserRepository userR
 
     public async Task<Device> CreateDeviceAsync(CreateDeviceDTO dto)
     {
-        var device = new Device
-        {
-            Name = dto.Name,
-            Manufacturer = dto.Manufacturer,
-            Type = dto.Type,
-            OS = dto.OS,
-            OSVersion = dto.OSVersion,
-            Processor = dto.Processor,
-            RAM = dto.RAM,
-            Description = dto.Description
-        };
+        var device = mapper.Map<Device>(dto);
         
         deviceRepo.AddDevice(device);
         
@@ -43,8 +34,6 @@ public class DevicesService(IDevicesRepository deviceRepo, IUserRepository userR
 
         throw new Exception("Problem creating the device");
     }
-
-    
 
     public async Task<IReadOnlyList<Device>> GetDevicesAsync()
     {
@@ -58,23 +47,11 @@ public class DevicesService(IDevicesRepository deviceRepo, IUserRepository userR
 
     public async Task<bool> UpdateDeviceAsync(UpdateDeviceDTO dto)
     {
-        if (!deviceRepo.DeviceExists(dto.Id)) return false;
+        var existingDevice = await deviceRepo.GetDeviceByIdAsync(dto.Id);
 
-        var device = new Device
-        {
-            Id = dto.Id,
-            Name = dto.Name,
-            Manufacturer = dto.Manufacturer,
-            Type = dto.Type,
-            OS = dto.OS,
-            OSVersion = dto.OSVersion,
-            Processor = dto.Processor,
-            RAM = dto.RAM,
-            Description = dto.Description,
-            UserId = dto.UserId
-        };
+        if (existingDevice == null) return false;
 
-        deviceRepo.UpdateDevice(device);
+        mapper.Map(dto, existingDevice);
         return await deviceRepo.SaveChangesAsync();
     }
 
@@ -90,64 +67,15 @@ public class DevicesService(IDevicesRepository deviceRepo, IUserRepository userR
 
     public async Task<DeviceDetailsDTO?> GetDeviceDetailsDTOAsync(int idDevice)
     {
-        Device? device = await deviceRepo.GetDeviceByIdAsync(idDevice);
+        var device = await deviceRepo.GetDeviceByIdAsync(idDevice);
 
-        if (device == null) return null;
-
-        DeviceDetailsDTO dev = new DeviceDetailsDTO
-        {
-            Name = device.Name,
-            Manufacturer = device.Manufacturer,
-            Type = device.Type,
-            OS = device.OS,
-            OSVersion = device.OSVersion,
-            Processor = device.Processor,
-            RAM = device.RAM,
-            Description = device.Description,
-        };
-
-        int? userId = device.UserId;
-        if (userId == null) return dev;
-        User? user = await userRepo.GetUserByIdAsync(userId.Value);
-
-        if (user == null) return dev;
-
-        dev.UserName = user.Name;
-        dev.UserLocation = user.Location;
-        dev.UserRole = user.Role;
-
-        return dev;
+        return mapper.Map<DeviceDetailsDTO>(device);
     }
 
     public async Task<IReadOnlyList<DeviceSummaryDTO>> GetDevicesSummaryDTOAsync()
     {
-        var devices = await deviceRepo.GetDevicesAsync();
-        var summaries = new List<DeviceSummaryDTO>();
+        var devices = await deviceRepo.GetDevicesAsync(); 
 
-        foreach (var device in devices)
-        {
-            var devDto = new DeviceSummaryDTO
-            {
-                Id = device.Id,
-                Name = device.Name,
-                Type = device.Type,
-                OS = device.OS
-            };
-
-            // user data
-            if (device.UserId.HasValue)
-            {
-                var user = await userRepo.GetUserByIdAsync(device.UserId.Value);
-                if (user != null)
-                {
-                    devDto.UserName = user.Name;
-                    devDto.UserLocation = user.Location;
-                }
-            }
-            
-            summaries.Add(devDto);
-        }
-
-        return summaries;
+        return mapper.Map<IReadOnlyList<DeviceSummaryDTO>>(devices);
     }
 }

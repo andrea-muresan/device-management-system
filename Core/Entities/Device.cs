@@ -14,6 +14,5 @@ public class Device : BaseEntity
     public required string Description { get; set; }
 
     public int? UserId { get; set; }
-    [System.Text.Json.Serialization.JsonIgnore]
     public User? User { get; set; }
 }

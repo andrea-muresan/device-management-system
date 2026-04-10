@@ -40,7 +40,7 @@ export class DeviceAddComponent implements OnInit{
     osVersion: ['', [Validators.required, Validators.maxLength(20)]],
     processor: ['', [Validators.required, Validators.maxLength(100)]],
     ram: [8, [Validators.required, Validators.min(1), Validators.max(512)]],
-    description: ['', [Validators.required, Validators.maxLength(1000)]],
+    description: ['', [Validators.required, Validators.maxLength(500)]],
   });
 
   loadDeviceData(id: number) {

@@ -19,14 +19,14 @@ public class UsersController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var users = await context.Users.Include(u => u.Devices).ToListAsync();
+        var users = await context.Users.ToListAsync();
         return Ok(users);
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var user = await context.Users.Include(u => u.Devices).FirstOrDefaultAsync(u => u.Id == id);
+        var user = await context.Users.FindAsync(id);
         if (user == null) return NotFound();
         return Ok(user);
     }

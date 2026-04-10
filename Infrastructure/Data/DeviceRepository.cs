@@ -22,10 +22,11 @@ public class DeviceRepository(DeviceDbContext context) : IDevicesRepository
     }
 
     public async Task<Device?> GetDeviceByIdAsync(int id)
-    {
-        return await context.Devices.Include(d => d.User)
-            .FirstOrDefaultAsync(d => d.Id == id);
-    }
+{
+    return await context.Devices
+        .Include(d => d.User)
+        .FirstOrDefaultAsync(d => d.Id == id);
+}
 
     public async Task<IReadOnlyList<Device>> GetDevicesAsync()
     {
