@@ -12,9 +12,9 @@
         <div>
           <h4 class="text-sm font-semibold text-yellow-800 mb-4 tracking-widest uppercase">Device Specifications</h4>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
+            <div class="col-span-full">
               <p class="text-gray-500 text-xs uppercase font-bold">Device Name</p>
-              <p class="font-semibold text-gray-900 text-lg">{{deviceDetails.name}}</p>
+              <p class="font-semibold text-xl text-gray-800">{{deviceDetails.name}}</p>
             </div>
             <div>
               <p class="text-gray-500 text-xs uppercase font-bold">Manufacturer</p>
@@ -27,6 +27,10 @@
             <div>
               <p class="text-gray-500 text-xs uppercase font-bold">Operating System</p>
               <p class="font-semibold text-gray-800">{{deviceDetails.os}}</p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-xs uppercase font-bold">OS Version</p>
+              <p class="font-semibold text-gray-800">{{deviceDetails.osVersion}}</p>
             </div>
             <div>
               <p class="text-gray-500 text-xs uppercase font-bold">Processor</p>

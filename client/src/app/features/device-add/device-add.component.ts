@@ -44,13 +44,13 @@ export class DeviceAddComponent implements OnInit{
   });
 
   loadDeviceData(id: number) {
-  this.deviceService.getDeviceById(id).subscribe({
-    next: (device) => {
-      this.deviceForm.patchValue(device as any);
-    },
-    error: (err) => console.error('Could not load device', err)
-  });
-}
+    this.deviceService.getDeviceById(id).subscribe({
+      next: (device) => {
+        this.deviceForm.patchValue(device as any);
+      },
+      error: (err) => console.error('Could not load device', err)
+    });
+  }
 
  onSubmit() {
   if (this.deviceForm.invalid) return;
