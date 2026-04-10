@@ -32,4 +32,12 @@ export class InventoryService {
   deleteDevice(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}devices/${id}`);
   }
+
+  updateDevice(device: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}devices/${device.id}`, device);
+  }
+
+  getDeviceById(id: number): Observable<Device> {
+    return this.http.get<Device>(`${this.baseUrl}devices/${id}`);
+  }
 }
