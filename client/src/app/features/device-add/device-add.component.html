@@ -103,10 +103,30 @@
         </div>
       </div>
 
-      <div class="bg-white/50 p-4 rounded-xl border-2 transition-all" [ngClass]="getInputClass('description')">
-        <label class="text-gray-500 text-xs uppercase font-bold mb-1 block">Description*</label>
+      <div class="bg-white/50 p-4 rounded-xl border-2 transition-all relative" [ngClass]="getInputClass('description')">
+        <div class="flex justify-between items-center mb-2">
+          <label class="text-gray-500 text-xs uppercase font-bold block">Description*</label>
+          
+          <button type="button" 
+            (click)="generateAiDescription()"
+            [disabled]="isGenerating"
+            class="flex items-center gap-1 text-[10px] font-black bg-purple-600 text-white px-3 py-1 rounded-full hover:bg-purple-700 disabled:bg-purple-300 transition-all active:scale-95 shadow-sm">
+            
+            @if (isGenerating) {
+              <span class="animate-pulse">THINKING...</span>
+            } @else {
+              <!-- <mat-icon class="text-sm scale-75">auto_awesome</mat-icon> -->
+              <span>AI GENERATE</span>
+            }
+          </button>
+        </div>
+
         <textarea formControlName="description" rows="3" placeholder="Add technical notes..."
-          class="w-full bg-transparent border-none focus:ring-0 italic text-sm p-0 resize-none outline-none"></textarea>
+          class="w-full bg-transparent border-none focus:ring-0 italic text-sm p-0 resize-none outline-none text-gray-700"></textarea>
+        
+        @if (shouldShowError('description')) {
+          <div class="text-[10px] text-red-600 font-bold mt-1 uppercase">Description is required</div>
+        }
       </div>
     </div>
   </form>

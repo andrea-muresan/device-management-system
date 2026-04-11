@@ -5,6 +5,7 @@ import { DeviceDetails } from '../../shared/models/device-details';
 import { DeviceSummary } from '../../shared/models/device-summary';
 import { DeviceCreate } from '../../shared/models/device-create';
 import { Observable } from 'rxjs';
+import { AiResponse } from '../../shared/models/AiResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -47,5 +48,9 @@ export class InventoryService {
 
   unassignDevice(deviceId: number): Observable<any> {
     return this.http.put(`${this.baseUrl}devices/${deviceId}/unassign`, {});
+  }
+
+  getAiDescription(specs: any): Observable<AiResponse> {
+    return this.http.post<AiResponse>(`${this.baseUrl}ai/generate-description`, specs);
   }
 }

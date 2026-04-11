@@ -22,6 +22,7 @@ export class DeviceAddComponent implements OnInit{
   
   isEditMode = false;
   deviceId?: number;
+  isGenerating = false;
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -52,28 +53,28 @@ export class DeviceAddComponent implements OnInit{
     });
   }
 
- onSubmit() {
-  if (this.deviceForm.invalid) return;
+  onSubmit() {
+    if (this.deviceForm.invalid) return;
 
-  const formValues = this.deviceForm.value;
-  
-  const payload = {
-    ...formValues,
-    type: Number(formValues.type),
-    id: this.deviceId
-  };
+    const formValues = this.deviceForm.value;
+    
+    const payload = {
+      ...formValues,
+      type: Number(formValues.type),
+      id: this.deviceId
+    };
 
-  const operation$ = this.isEditMode 
-    ? this.deviceService.updateDevice(payload) 
-    : this.deviceService.createDevice(payload as DeviceCreate);
+    const operation$ = this.isEditMode 
+      ? this.deviceService.updateDevice(payload) 
+      : this.deviceService.createDevice(payload as DeviceCreate);
 
-  operation$.subscribe({
-    next: () => this.router.navigate(['/inventory']),
-    error: (err) => {
-      console.error(`${this.isEditMode ? 'Update' : 'Creation'} failed:`, err);
-    }
-  });
-}
+    operation$.subscribe({
+      next: () => this.router.navigate(['/inventory']),
+      error: (err) => {
+        console.error(`${this.isEditMode ? 'Update' : 'Creation'} failed:`, err);
+      }
+    });
+  }
 
   getInputClass(controlName: string) {
     const control = this.deviceForm.get(controlName);
@@ -90,5 +91,29 @@ export class DeviceAddComponent implements OnInit{
   shouldShowError(controlName: string): boolean {
     const control = this.deviceForm.get(controlName);
     return !!(control && control.invalid && (control.dirty || control.touched));
+  }
+
+  generateAiDescription() {
+    const controls = this.deviceForm.controls;
+    const requiredForAI = ['name', 'manufacturer', 'type', 'os', 'osVersion', 'processor', 'ram'];
+    const isMissingData = requiredForAI.some(field => controls[field as keyof typeof controls].invalid);
+    
+    if (isMissingData) {
+      alert('Please fill in all technical specifications (Name, Manufacturer, Type, OS, Processor, and RAM) so the AI can generate an accurate description!');
+      return;
+    }
+
+    this.isGenerating = true;
+
+    this.deviceService.getAiDescription(this.deviceForm.value).subscribe({
+      next: (res) => {
+        this.deviceForm.patchValue({ description: res.description });
+        this.isGenerating = false;
+      },
+      error: () => {
+        this.isGenerating = false;
+        alert('AI generation failed. Please try again.');
+      }
+    });
   }
 }
