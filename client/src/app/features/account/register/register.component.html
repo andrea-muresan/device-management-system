@@ -1,0 +1,72 @@
+<div class="min-h-[90vh] flex items-center justify-center py-10 px-4">
+  <div class="max-w-lg w-full bg-yellow-50 p-8 rounded-xl shadow-lg border-2 border-yellow-300">
+    
+    @if (registrationSuccess) {
+      <div class="mb-6 p-4 bg-green-100 border-l-4 border-green-500 text-green-700 animate-pulse">
+        <div class="flex items-center">
+          <div class="py-1">
+            <svg class="fill-current h-6 w-6 text-green-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM6.7 9.29L9 11.59l4.3-4.3 1.4 1.42L9 14.41l-3.7-3.7 1.4-1.42z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="font-bold">Registration Successful!</p>
+            <p class="text-sm">Your account has been created. Redirecting to login...</p>
+          </div>
+        </div>
+      </div>
+    }
+
+    <div class="text-center mb-6">
+      <h2 class="text-3xl font-bold text-gray-800 italic">Staff Registration</h2>
+      <p class="text-gray-500 mt-2">All fields are required to create an account</p>
+    </div>
+
+    @if (!registrationSuccess) {
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+          <input type="text" formControlName="name" [ngClass]="getInputClass('name')"
+            class="w-full p-3 rounded-lg border-2 bg-white outline-none transition-all" placeholder="Enter your full name">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+          <input type="email" formControlName="email" [ngClass]="getInputClass('email')"
+            class="w-full p-3 rounded-lg border-2 bg-white outline-none transition-all" placeholder="name@company.com">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Password *</label>
+          <input type="password" formControlName="password" [ngClass]="getInputClass('password')"
+            class="w-full p-3 rounded-lg border-2 bg-white outline-none transition-all" placeholder="Minimum 6 characters">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Job Role/Title *</label>
+            <input type="text" formControlName="role" [ngClass]="getInputClass('role')"
+              class="w-full p-3 rounded-lg border-2 bg-white outline-none transition-all" placeholder="e.g. IT Manager">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Office Location *</label>
+            <input type="text" formControlName="location" [ngClass]="getInputClass('location')"
+              class="w-full p-3 rounded-lg border-2 bg-white outline-none transition-all" placeholder="e.g. London">
+          </div>
+        </div>
+
+        <button type="submit" 
+          [disabled]="registerForm.invalid"
+          class="w-full mt-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed shadow-md">
+          Complete Registration
+        </button>
+
+        <p class="text-center text-sm text-gray-600 mt-4">
+          Already have an account? 
+          <a routerLink="/login" class="text-yellow-600 font-semibold hover:underline">Sign in</a>
+        </p>
+      </form>
+    }
+  </div>
+</div>

@@ -3,8 +3,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InventoryService } from '../../core/services/inventory.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { DEVICE_TYPE_LIST } from '../../shared/modules/device-type';
-import { DeviceCreate } from '../../shared/modules/device-create';
+import { DEVICE_TYPE_LIST } from '../../shared/models/device-type';
+import { DeviceCreate } from '../../shared/models/device-create';
 
 @Component({
   selector: 'app-device-add',

@@ -19,7 +19,7 @@ public class DevicesController(IDevicesService srv): ControllerBase
        return Ok(await srv.GetDevicesAsync());
     }
 
-    [HttpGet("{id:int}")]  // api/products/2
+    [HttpGet("{id:int}"), BasicAuthorization]  // api/products/2
     public async Task<IActionResult> GetById(int id)
     {
         var device = await srv.GetDeviceByIdAsync(id);
@@ -27,7 +27,7 @@ public class DevicesController(IDevicesService srv): ControllerBase
         return Ok(device);
     }
 
-    [HttpPost]
+    [HttpPost, BasicAuthorization]
     public async Task<IActionResult> Create([FromBody] CreateDeviceDTO device)
     {
 
@@ -36,7 +36,7 @@ public class DevicesController(IDevicesService srv): ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = createdDevice.Id }, createdDevice);
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{id:int}"), BasicAuthorization]
     public async Task<IActionResult> Update(int id, UpdateDeviceDTO device)
     {
         if (id != device.Id) return BadRequest("ID mismatch");
@@ -48,7 +48,7 @@ public class DevicesController(IDevicesService srv): ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{id:int}"), BasicAuthorization]
     public async Task<IActionResult> Delete(int id)
     {
         var deleted = await srv.DeleteDeviceAsync(id);
@@ -58,7 +58,7 @@ public class DevicesController(IDevicesService srv): ControllerBase
         return NoContent();
     }
 
-    [HttpGet("details/{id:int}")]
+    [HttpGet("details/{id:int}"), BasicAuthorization]
     public async Task<IActionResult> GetDeviceDetails(int id)
     {
         var device = await srv.GetDeviceDetailsDTOAsync(id);
@@ -66,7 +66,7 @@ public class DevicesController(IDevicesService srv): ControllerBase
         return Ok(device);
     }
 
-    [HttpGet("summary")]
+    [HttpGet("summary"), BasicAuthorization]
     public async Task<ActionResult<IReadOnlyList<DeviceSummaryDTO>>> GetDevicesSummary(int id)
     {
         return Ok(await srv.GetDevicesSummaryDTOAsync());

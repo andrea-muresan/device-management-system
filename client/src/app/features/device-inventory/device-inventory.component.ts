@@ -1,9 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Device } from '../../shared/modules/device';
-import { HttpClient } from '@angular/common/http';
 import { DeviceItemComponent } from "./device-item/device-item.component";
 import { InventoryService } from '../../core/services/inventory.service';
-import { DeviceSummary } from '../../shared/modules/device-summary';
+import { DeviceSummary } from '../../shared/models/device-summary';
 
 @Component({
   selector: 'app-device-inventory',

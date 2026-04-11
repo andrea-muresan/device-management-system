@@ -1,10 +1,9 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Device } from '../../../shared/modules/device';
 import { MatIconModule } from '@angular/material/icon';
-import { DeviceType } from '../../../shared/modules/device-type';
+import { DeviceType } from '../../../shared/models/device-type';
 import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { DeviceSummary } from '../../../shared/modules/device-summary';
+import { DeviceSummary } from '../../../shared/models/device-summary';
 import { InventoryService } from '../../../core/services/inventory.service';
 
 @Component({

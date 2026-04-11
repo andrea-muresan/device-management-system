@@ -12,7 +12,7 @@
   ));
 }
 
-.delete {
+.red-btn, .delete {
   @include mat.button-overrides((
     filled-container-color: red
   ));
@@ -24,7 +24,7 @@
   ));
 }
 
-.update {
+.stroked-btn, .update {
   @include mat.button-overrides((
     outlined-outline-color: orange,
     outlined-outline-width: 2px,

@@ -31,4 +31,18 @@ public class AccountController(IUserRepository userRepo): ControllerBase
         
         return StatusCode(500, "An error occurred while saving the user.");
     }
+
+    [HttpGet("login")]
+    public async Task<ActionResult<User>> Login()
+    {
+        var email = User.Identity?.Name;
+
+        if (string.IsNullOrEmpty(email)) return Unauthorized();
+
+        var user = await userRepo.GetUserByEmailAsync(email);
+
+        if (user == null) return Unauthorized();
+
+        return Ok(user);
+    }
 }
