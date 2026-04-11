@@ -55,7 +55,6 @@ export class DeviceAddComponent implements OnInit{
  onSubmit() {
   if (this.deviceForm.invalid) return;
 
-  // Combine form values with the ID
   const formValues = this.deviceForm.value;
   
   const payload = {
@@ -69,7 +68,7 @@ export class DeviceAddComponent implements OnInit{
     : this.deviceService.createDevice(payload as DeviceCreate);
 
   operation$.subscribe({
-    next: () => this.router.navigate(['/devices']),
+    next: () => this.router.navigate(['/inventory']),
     error: (err) => {
       console.error(`${this.isEditMode ? 'Update' : 'Creation'} failed:`, err);
     }

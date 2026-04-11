@@ -12,6 +12,13 @@ export class AccountService {
   private http = inject(HttpClient);
   currentUser = signal<User | null>(null);
 
+  constructor() {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      this.currentUser.set(JSON.parse(savedUser));
+    }
+  }
+
   login(values: any) {
     const credentials = btoa(`${values.email}:${values.password}`);
     const headers = new HttpHeaders({

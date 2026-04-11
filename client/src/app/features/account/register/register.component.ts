@@ -30,7 +30,7 @@ export class RegisterComponent {
     this.accountService.register(this.registerForm.value).subscribe({
       next: () => {
         this.registrationSuccess = true;
-        // Wait 3 seconds so they can read the message, then go to login
+
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 3000);

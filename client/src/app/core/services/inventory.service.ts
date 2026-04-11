@@ -18,21 +18,11 @@ export class InventoryService {
   }
 
   getDeviceDetails(id: number) {
-    const credentials = localStorage.getItem('credentials');
-  
-    const headers = new HttpHeaders({
-      'Authorization': `Basic ${credentials}`
-    });
-    return this.http.get<DeviceDetails>(this.baseUrl + 'devices/details/' + id, {headers});
+    return this.http.get<DeviceDetails>(this.baseUrl + 'devices/details/' + id);
   }
 
   getDevicesSummary() {
-    const credentials = localStorage.getItem('credentials');
-  
-    const headers = new HttpHeaders({
-      'Authorization': `Basic ${credentials}`
-    });
-    return this.http.get<DeviceSummary[]>(this.baseUrl + 'devices/summary', {headers});
+    return this.http.get<DeviceSummary[]>(this.baseUrl + 'devices/summary');
   }
 
   createDevice(device: DeviceCreate): Observable<any> {
