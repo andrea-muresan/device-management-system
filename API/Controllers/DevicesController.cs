@@ -2,6 +2,7 @@ using API.DTOs;
 using Core.DTOs;
 using Core.Entities;
 using Core.Interfaces;
+using Infrastructure.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -12,7 +13,7 @@ public class DevicesController(IDevicesService srv): ControllerBase
 {
     
 
-    [HttpGet]
+    [HttpGet, BasicAuthorization]
     public async Task<ActionResult<IReadOnlyList<Device>>> getAll()
     {
        return Ok(await srv.GetDevicesAsync());
