@@ -36,4 +36,6 @@ public class DeviceDetailsDTO
     public string UserRole {get;set;} = string.Empty;
 
     public string UserLocation {get;set;} = string.Empty;
+
+    public string UserEmail {get;set;} = string.Empty;
 }

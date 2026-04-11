@@ -4,10 +4,11 @@ using Core.DTOs;
 using Core.Entities;
 using Core.Interfaces;
 using AutoMapper;
+using Infrastructure.Data;
 
 namespace Infrastructure.Services;
 
-public class DevicesService(IDevicesRepository deviceRepo, IMapper mapper) : IDevicesService
+public class DevicesService(IDevicesRepository deviceRepo, IUserRepository userRepo, IMapper mapper) : IDevicesService
 {
     public async Task<Device> CreateDeviceAsync(Device device)
     {
@@ -77,5 +78,35 @@ public class DevicesService(IDevicesRepository deviceRepo, IMapper mapper) : IDe
         var devices = await deviceRepo.GetDevicesAsync(); 
 
         return mapper.Map<IReadOnlyList<DeviceSummaryDTO>>(devices);
+    }
+
+    public async Task<bool> AssignDeviceToEmail(int id, string email)
+    {
+        var device = await deviceRepo.GetDeviceByIdAsync(id);
+        var user = await userRepo.GetUserByEmailAsync(email);
+
+        if (device == null || user == null) return false;
+
+        if (device.UserId != null) return false;
+
+        device.UserId = user.Id;
+
+        return await deviceRepo.SaveChangesAsync();
+    }
+
+    public async Task<bool> UnassignDeviceFromEmail(int id, string email)
+    {
+        var device = await deviceRepo.GetDeviceByIdAsync(id);
+        var user = await userRepo.GetUserByEmailAsync(email);
+
+        if (device == null || user == null) return false;
+
+        if (device.UserId == null) return false;
+
+        if (device.Id != id || user.Email != email) return false;
+
+        device.UserId = null;
+
+        return await deviceRepo.SaveChangesAsync();
     }
 }

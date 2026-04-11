@@ -40,4 +40,12 @@ export class InventoryService {
   getDeviceById(id: number): Observable<Device> {
     return this.http.get<Device>(`${this.baseUrl}devices/${id}`);
   }
+
+  assignDevice(deviceId: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}devices/${deviceId}/assign`, {});
+  }
+
+  unassignDevice(deviceId: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}devices/${deviceId}/unassign`, {});
+  }
 }

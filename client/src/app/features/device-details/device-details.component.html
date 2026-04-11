@@ -49,32 +49,52 @@
         </div>
 
         <div class="border-t border-yellow-300 pt-6">
-          <h4 class="text-sm font-semibold text-yellow-800 mb-4 tracking-widest uppercase">Current User</h4>
-          
-          @if (deviceDetails.userName) {
-            <div class="space-y-4 bg-white/40 p-4 rounded-xl">
+        <h4 class="text-sm font-semibold text-yellow-800 mb-4 tracking-widest uppercase">Current User</h4>
+        
+        @if (deviceDetails.userName) {
+          <div class="space-y-4 bg-white/40 p-4 rounded-xl">
+            <div class="flex justify-between items-center">
               <div>
                 <p class="text-gray-600 text-xs font-bold uppercase">Name</p>
                 <p class="font-semibold text-amber-700 text-xl">{{deviceDetails.userName}}</p>
               </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                      <p class="text-gray-600 text-xs font-bold uppercase">Role</p>
-                      <p class="font-semibold text-gray-800">{{deviceDetails.userRole}}</p>
-                  </div>
-                  <div>
-                      <p class="text-gray-600 text-xs font-bold uppercase">Location</p>
-                      <p class="font-semibold text-green-600">{{deviceDetails.userLocation}}</p>
-                  </div>
-              </div>
+
+              @if (isAssignedToMe()) {
+                <button 
+                  (click)="unassign()"
+                  class="text-[10px] font-black text-red-600 border-2 border-red-200 px-3 py-1 rounded-lg hover:bg-red-600 hover:text-white active:scale-95 transition-all uppercase tracking-tighter shadow-sm">
+                  Release Device
+                </button>
+              }
             </div>
-          } @else {
-            <div class="p-6 border-2 border-dashed border-yellow-300 rounded-xl text-center">
-                <p class="font-bold text-yellow-700 uppercase">This device is unassigned</p>
-                <button class="mt-2 text-xs font-black text-white bg-yellow-600 px-4 py-2 rounded-lg hover:bg-yellow-700">ASSIGN NOW</button>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <p class="text-gray-600 text-xs font-bold uppercase">Role</p>
+                    <p class="font-semibold text-gray-800">{{deviceDetails.userRole}}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 text-xs font-bold uppercase">Location</p>
+                    <p class="font-semibold text-green-600">{{deviceDetails.userLocation}}</p>
+                </div>
+                <div class="col-span-full">
+                  <p class="text-gray-500 text-xs uppercase font-bold">Email</p>
+                  <p class="font-semibold text-gray-800">{{deviceDetails.userEmail}}</p>
+                </div>
             </div>
-          }
-        </div>
+          </div>
+        } @else {
+          <div class="p-6 border-2 border-dashed border-yellow-300 rounded-xl text-center">
+            <p class="font-bold text-yellow-700 uppercase">This device is unassigned</p>
+            <button 
+              (click)="assignToMe()"
+              class="mt-2 text-xs font-black text-white bg-yellow-600 px-4 py-2 rounded-lg hover:bg-yellow-700 active:scale-95 transition-transform">
+              ASSIGN TO ME
+            </button>
+          </div>
+        }
+      </div>
+
       </div>
     </div>
     } @else {

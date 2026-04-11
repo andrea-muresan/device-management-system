@@ -12,4 +12,5 @@ export type DeviceDetails = {
   userName?: string;
   userRole?: string;
   userLocation?: string;
+  userEmail?: string;
 }

@@ -72,4 +72,31 @@ public class DevicesController(IDevicesService srv): ControllerBase
         return Ok(await srv.GetDevicesSummaryDTOAsync());
     }
 
+    [HttpPut("{id}/assign"), BasicAuthorization]
+    public async Task<IActionResult> AssignToMe(int id)
+    {
+        var userEmail = User.Identity?.Name; 
+
+        if (string.IsNullOrEmpty(userEmail)) return Unauthorized();
+
+        var success = await srv.AssignDeviceToEmail(id, userEmail);
+        if (!success) return NotFound();
+        
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/unassign"), BasicAuthorization]
+    public async Task<IActionResult> Unassign(int id)
+    {
+        var userEmail = User.Identity?.Name;
+
+        if (string.IsNullOrEmpty(userEmail)) return Unauthorized();
+        
+        var success = await srv.UnassignDeviceFromEmail(id, userEmail);
+        if (!success) return NotFound();
+        
+        return NoContent();
+    }
+
 }
