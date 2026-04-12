@@ -53,4 +53,10 @@ export class InventoryService {
   getAiDescription(specs: any): Observable<AiResponse> {
     return this.http.post<any>(`${this.baseUrl}ai/generate-description`, specs);
   }
+
+  getRankedSearch(query: string): Observable<DeviceSummary[]> {
+    return this.http.get<DeviceSummary[]>(`${this.baseUrl}devices/search`, {
+      params: { q: query }
+    });
+  }
 }

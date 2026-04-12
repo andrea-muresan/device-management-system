@@ -1,19 +1,34 @@
+<div class="max-w-2xl mx-auto mb-10 px-4">
+  <div class="flex gap-2">
+    <div class="relative grow">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <mat-icon class="text-yellow-600">search</mat-icon>
+      </div>
+
+      <input #searchInput type="text" (keyup.enter)="onSearch(searchInput.value)"
+            class="w-full bg-white border-2 border-yellow-300 rounded-lg p-2 pl-10 outline-none transition-all" 
+            placeholder="Search names, brands, RAM">
+    </div>
+
+    <button 
+      (click)="onSearch(searchInput.value)"
+      mat-flat-button class="view" 
+    >
+      Search
+    </button>
+  </div>
+  
+  @if (isSearching) {
+    <p class="text-center mt-2 text-amber-600 font-bold animate-pulse">Scanning the pond...</p>
+  }
+</div>
+
 <div class="container mx-auto px-4 py-8">
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    
     @for (item of devices; track item.id) {
-      <app-device-item 
-        [device]="item"
-        (deleted)="handleDelete($event)"
-      >
-      </app-device-item>
+       <app-device-item [device]="item" (deleted)="handleDelete($event)" />
     } 
     @empty {
-      <div class="col-span-full flex flex-col items-center justify-center py-20 bg-white/50 border-4 border-dashed border-yellow-300 rounded-3xl">
-        <h2 class="text-2xl font-black text-yellow-900 uppercase">The pond is empty!</h2>
-        <p class="text-amber-700 font-bold">No devices found in the inventory.</p>
-      </div>
-    }
-
+      }
   </div>
 </div>

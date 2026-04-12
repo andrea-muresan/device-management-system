@@ -99,7 +99,7 @@ public class DevicesController(IDevicesService srv): ControllerBase
         return NoContent();
     }
 
-    [HttpGet("search")]
+    [HttpGet("search"), BasicAuthorization]
     public async Task<IActionResult> Search([FromQuery] string q)
     {
         var allDevices = await srv.GetDevicesSummaryDTOAsync();
