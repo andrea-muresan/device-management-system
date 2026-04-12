@@ -36,6 +36,7 @@ npm install
 7. To use the generating description for devices you will need an ai studio key. You can get one [here](https://aistudio.google.com/api-keys?project=gen-lang-client-0740262472)
 ```bash
 # run this from the API folder
+cd API
 dotnet user-secrets init
 dotnet user-secrets set "GoogleAI:ApiKey" "ADD_YOUR_KEY"
 ```
@@ -65,6 +66,7 @@ cd API
 dotnet run
 
 # terminal tab 2
+cd client
 ng serve
 ```
 
