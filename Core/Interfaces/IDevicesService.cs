@@ -16,4 +16,5 @@ public interface IDevicesService
     Task<bool> DeleteDeviceAsync(int id);
     Task<bool> AssignDeviceToEmail(int id, string email);
     Task<bool> UnassignDeviceFromEmail(int id, string email);
+    List<DeviceSummaryDTO> SearchDevices(string query, List<DeviceSummaryDTO> allDevices);
 }

@@ -4,7 +4,8 @@ export type DeviceSummary = {
     id: number;
     name: string;
     type: DeviceType;
-    os: string;
+    manufacturer: string;
+    processor: string;
+    ram:number;
     userName?: string;
-    userLocation?: string;
 }

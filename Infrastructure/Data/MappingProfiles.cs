@@ -23,7 +23,6 @@ public class MappingProfiles : Profile
             .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User!.Email));
 
         CreateMap<Device, DeviceSummaryDTO>()
-            .ForMember(d => d.UserName, o => o.MapFrom(s => s.User!.Name))
-            .ForMember(d => d.UserLocation, o => o.MapFrom(s => s.User!.Location));
+            .ForMember(d => d.UserName, o => o.MapFrom(s => s.User!.Name));
     }
 }

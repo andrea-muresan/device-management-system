@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using Core.Enums;
 
@@ -16,9 +15,13 @@ public class DeviceSummaryDTO
     public DeviceType Type { get; set; }
 
     [Required]
-    public string OS { get; set; } = string.Empty;
+    public string Manufacturer { get; set; } = string.Empty;
+
+    [Required]
+    public string Processor { get; set; } = string.Empty;
+
+    [Required]
+    public int RAM { get; set; }
 
     public string UserName {get;set;} = string.Empty;
-
-    public string UserLocation {get;set;} = string.Empty;
 }

@@ -1,10 +1,8 @@
-
 using API.DTOs;
 using Core.DTOs;
 using Core.Entities;
 using Core.Interfaces;
 using AutoMapper;
-using Infrastructure.Data;
 
 namespace Infrastructure.Services;
 
@@ -108,5 +106,47 @@ public class DevicesService(IDevicesRepository deviceRepo, IUserRepository userR
         device.UserId = null;
 
         return await deviceRepo.SaveChangesAsync();
+    }
+
+    public List<DeviceSummaryDTO> SearchDevices(string query, List<DeviceSummaryDTO> allDevices)
+    {
+        if (string.IsNullOrWhiteSpace(query)) return allDevices;
+
+        var cleanQuery = new string(query.Where(c => !char.IsPunctuation(c)).ToArray());
+        var tokens = cleanQuery.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return allDevices
+            .Select(device => new
+            {
+                Device = device,
+                Score = CalculateRelevanceScore(device, tokens)
+            })
+            .Where(x => x.Score > 0)
+            .OrderByDescending(x => x.Score)
+            .ThenBy(x => x.Device.Name)
+            .Select(x => x.Device)
+            .ToList();
+    }
+
+    private int CalculateRelevanceScore(DeviceSummaryDTO device, string[] tokens)
+    {
+        int score = 0;
+
+        foreach (var token in tokens)
+        {
+            // name first - 10 puncte
+            if (device.Name.ToLower().Contains(token)) score += 10;
+
+            // manufactureur - 5
+            if (device.Manufacturer.ToLower().Contains(token)) score += 5;
+
+            // processor 3
+            if (device.Processor.ToLower().Contains(token)) score += 3;
+
+            // ram 1
+            if (device.RAM.ToString().Contains(token)) score += 1;
+        }
+
+        return score;
     }
 }

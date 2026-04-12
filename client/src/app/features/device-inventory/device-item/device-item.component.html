@@ -4,7 +4,7 @@
     <div class="flex justify-between items-start mb-2">
         <div>
             <h3 class="text-xl font-black text-yellow-900 uppercase tracking-tight">{{ device.name }}</h3>
-            <h3 class="text-xs font-black text-yellow-600 uppercase tracking-tight">{{device.os}}</h3>
+            <h3 class="text-xs font-black text-yellow-600 uppercase tracking-tight">{{device.manufacturer}}</h3>
         </div>
         <span class="px-3 py-1 bg-yellow-200 text-yellow-800 rounded-full text-xs">
             {{ deviceTypeName }}
@@ -13,14 +13,18 @@
 
     <div class="grid grid-cols-2 gap-2 mb-6 py-2 border-y-2 border-yellow-300">
         <div>
+            <p class="text-gray-600 text-xs">Processor</p>
+            <p class="font-semibold text-gray-800">{{device.processor}}</p>
+        </div>
+        <div>
+            <p class="text-gray-600 text-xs">RAM</p>
+            <p class="font-semibold text-gray-800">{{device.ram}} GB</p>
+        </div>
+        <div>
             <p class="text-gray-600 text-xs">Assigned To</p>
             <p class="font-semibold {{ device.userName ? 'text-black' : 'text-red-600' }}">
                 {{ device.userName || 'Unassigned' }}
             </p>       
-        </div>
-        <div>
-            <p class="text-gray-600 text-xs">Location</p>
-            <p class="font-semibold text-gray-800">{{device.userLocation}}</p>
         </div>
     </div>
 
