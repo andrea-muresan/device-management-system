@@ -4,6 +4,7 @@ import { InventoryService } from '../../core/services/inventory.service';
 import { DeviceSummary } from '../../shared/models/device-summary';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-device-inventory',
@@ -12,7 +13,7 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './device-inventory.component.css',
 })
 export class DeviceInventoryComponent implements OnInit {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
   private inventoryService = inject(InventoryService);
   title = 'DevSys';
   devices: DeviceSummary[] = [];

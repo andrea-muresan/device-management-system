@@ -6,12 +6,13 @@ import { DeviceSummary } from '../../shared/models/device-summary';
 import { DeviceCreate } from '../../shared/models/device-create';
 import { Observable } from 'rxjs';
 import { AiResponse } from '../../shared/models/AiResponse';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InventoryService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
   
   getDevices() {
