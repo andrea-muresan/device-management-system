@@ -51,6 +51,6 @@ export class InventoryService {
   }
 
   getAiDescription(specs: any): Observable<AiResponse> {
-    return this.http.post<AiResponse>(`${this.baseUrl}ai/generate-description`, specs);
+    return this.http.post<any>(`${this.baseUrl}ai/generate-description`, specs);
   }
 }

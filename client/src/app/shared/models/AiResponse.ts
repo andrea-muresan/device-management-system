@@ -1,3 +1,3 @@
 export type AiResponse = {
-  description: string;
+  response: string;
 }
